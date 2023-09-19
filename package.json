@@ -1,14 +1,12 @@
 {
   "name": "@lakehouse-rs/flight-sql-client",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A FlightSQL client for  Node.js",
   "main": "index.js",
   "repository": "https://github.com/roeap/flight-sql-client-node.git",
   "license": "MIT",
   "keywords": [
     "napi-rs",
-    "NAPI",
-    "N-API",
     "Rust",
     "node-addon",
     "node-addon-api"

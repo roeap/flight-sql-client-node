@@ -123,18 +123,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/cli@npm:^2.14.6":
-  version: 2.15.2
-  resolution: "@napi-rs/cli@npm:2.15.2"
-  bin:
-    napi: scripts/index.js
-  checksum: dedcbd339f634e4a4c442febbfaee7c0fd907f3b8082c1f3ddba18b0e02ae2f0e4bff75688763669db5fb1a0f5ab26a7200cb6c01fe8825effd0a70a44bcbbc7
-  languageName: node
-  linkType: hard
-
-"@napi-rs/package-template@workspace:.":
+"@lakehouse-rs/flight-sql-client@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@napi-rs/package-template@workspace:."
+  resolution: "@lakehouse-rs/flight-sql-client@workspace:."
   dependencies:
     "@napi-rs/cli": ^2.14.6
     "@swc-node/register": ^1.5.5
@@ -156,6 +147,15 @@ __metadata:
     typescript: ^5.0.0
   languageName: unknown
   linkType: soft
+
+"@napi-rs/cli@npm:^2.14.6":
+  version: 2.15.2
+  resolution: "@napi-rs/cli@npm:2.15.2"
+  bin:
+    napi: scripts/index.js
+  checksum: dedcbd339f634e4a4c442febbfaee7c0fd907f3b8082c1f3ddba18b0e02ae2f0e4bff75688763669db5fb1a0f5ab26a7200cb6c01fe8825effd0a70a44bcbbc7
+  languageName: node
+  linkType: hard
 
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
