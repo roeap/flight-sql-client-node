@@ -44,7 +44,7 @@ impl FlightSqlClient {
 pub async fn create_flight_sql_client(options: ClientArgs) -> Result<FlightSqlClient, napi::Error> {
     Ok(FlightSqlClient {
         client: Mutex::new(setup_client(options).await.context(ArrowSnafu {
-            message: "failed to setup flight sql client",
+            message: "failed setting up flight sql client",
         })?),
     })
 }
