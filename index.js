@@ -234,7 +234,8 @@ if (!nativeBinding) {
   throw new Error(`Failed to load native binding`)
 }
 
-const { FlightSqlClient, createFlightSqlClient } = nativeBinding
+const { FlightSqlClient, createFlightSqlClient, crateVersion } = nativeBinding
 
 module.exports.FlightSqlClient = FlightSqlClient
 module.exports.createFlightSqlClient = createFlightSqlClient
+module.exports.crateVersion = crateVersion

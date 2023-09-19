@@ -29,6 +29,7 @@ export interface ClientArgs {
   port?: number
 }
 export function createFlightSqlClient(options: ClientArgs): Promise<FlightSqlClient>
+export function crateVersion(): string
 export class FlightSqlClient {
   query(query: string): Promise<Buffer>
 }

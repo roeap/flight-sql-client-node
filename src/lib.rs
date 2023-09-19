@@ -48,3 +48,8 @@ pub async fn create_flight_sql_client(options: ClientArgs) -> Result<FlightSqlCl
         })?),
     })
 }
+
+#[napi]
+pub fn crate_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
+}
