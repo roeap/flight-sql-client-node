@@ -7,8 +7,6 @@ env:
   push:
     branches:
       - main
-    tags-ignore:
-      - '**'
     paths-ignore:
       - '**/*.md'
       - LICENSE
