@@ -1,3 +1,3 @@
-# `@napi-rs/package-template-linux-arm64-musl`
+# `@lakehouse-rs/flight-sql-client-linux-arm64-musl`
 
-This is the **aarch64-unknown-linux-musl** binary for `@napi-rs/package-template`
+This is the **aarch64-unknown-linux-musl** binary for `@lakehouse-rs/flight-sql-client`

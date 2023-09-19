@@ -1,5 +1,5 @@
 {
-  "name": "@napi-rs/package-template-linux-arm64-gnu",
+  "name": "@lakehouse-rs/flight-sql-client-linux-arm64-gnu",
   "version": "1.0.0",
   "os": [
     "linux"
@@ -7,14 +7,11 @@
   "cpu": [
     "arm64"
   ],
-  "libc": [
-    "glibc"
-  ],
-  "main": "package-template.linux-arm64-gnu.node",
+  "main": "flight-sql-client.linux-arm64-gnu.node",
   "files": [
-    "package-template.linux-arm64-gnu.node"
+    "flight-sql-client.linux-arm64-gnu.node"
   ],
-  "description": "Template project for writing node package with napi-rs",
+  "description": "A FlightSQL client for  Node.js",
   "keywords": [
     "napi-rs",
     "NAPI",
@@ -31,5 +28,8 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "repository": "git@github.com:napi-rs/package-template.git"
+  "repository": "https://github.com/roeap/flight-sql-client-node.git",
+  "libc": [
+    "glibc"
+  ]
 }

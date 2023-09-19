@@ -1,3 +1,3 @@
-# `@napi-rs/package-template-android-arm-eabi`
+# `@lakehouse-rs/flight-sql-client-android-arm-eabi`
 
-This is the **armv7-linux-androideabi** binary for `@napi-rs/package-template`
+This is the **armv7-linux-androideabi** binary for `@lakehouse-rs/flight-sql-client`
