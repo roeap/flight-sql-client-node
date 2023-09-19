@@ -8,8 +8,6 @@ pub type Result<T, E = Error> = std::result::Result<T, E>;
 pub enum Error {
     #[snafu(display("column '{name}' is missing"))]
     MissingColumn { name: String },
-    #[snafu(display("{name}: {message}"))]
-    RangeError { name: String, message: String },
     #[snafu(display("{message}"))]
     Arrow {
         source: ArrowError,

@@ -7,8 +7,9 @@ use arrow_ipc::writer::FileWriter;
 use arrow_schema::SchemaRef;
 use snafu::prelude::*;
 
-use crate::error::{ArrowSnafu, MissingColumnSnafu, Result};
+use crate::error::{ArrowSnafu, Result};
 
+#[allow(unused)]
 pub(crate) fn arrow_buffer_to_record_batch(slice: &[u8]) -> Result<(Vec<RecordBatch>, SchemaRef)> {
     let mut batches: Vec<RecordBatch> = Vec::new();
     let file_reader = FileReader::try_new(Cursor::new(slice), None).context(ArrowSnafu {
@@ -41,7 +42,7 @@ pub(crate) fn record_batch_to_buffer(batches: Vec<RecordBatch>) -> Result<Vec<u8
     fr.finish().context(ArrowSnafu {
         message: "failed to convert to buffer",
     })?;
-    Ok(fr.into_inner().context(ArrowSnafu {
+    fr.into_inner().context(ArrowSnafu {
         message: "failed to convert to buffer",
-    })?)
+    })
 }

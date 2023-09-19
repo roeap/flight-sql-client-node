@@ -1,4 +1,4 @@
-use std::{error::Error, sync::Arc, time::Duration};
+use std::{sync::Arc, time::Duration};
 
 use arrow_array::{ArrayRef, Datum, RecordBatch, StringArray};
 use arrow_cast::{cast_with_options, CastOptions};
@@ -80,6 +80,7 @@ pub(crate) async fn execute_flight(
     Ok(batches)
 }
 
+#[allow(unused)]
 fn construct_record_batch_from_params(
     params: &[(String, String)],
     parameter_schema: &Schema,
@@ -100,6 +101,7 @@ fn construct_record_batch_from_params(
     RecordBatch::try_from_iter(items)
 }
 
+#[allow(unused)]
 fn setup_logging() {
     tracing_log::LogTracer::init().expect("tracing log init");
     tracing_subscriber::fmt::init();
