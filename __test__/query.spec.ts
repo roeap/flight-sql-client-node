@@ -28,3 +28,31 @@ test('simple query returns data', async (t) => {
   const table = tableFromIPC(buffer);
   t.truthy(table.toString());
 });
+
+// test('get catalogs returns data', async (t) => {
+//   const client = await createFlightSqlClient(t.context.options);
+//   const buffer = await client.getCatalogs();
+//   const table = tableFromIPC(buffer);
+//   t.truthy(table.toString());
+// });
+
+test('get schemas returns data', async (t) => {
+  const client = await createFlightSqlClient(t.context.options);
+  const buffer = await client.getDbSchemas({});
+  const table = tableFromIPC(buffer);
+  t.truthy(table.toString());
+});
+
+test('get tables returns data', async (t) => {
+  const client = await createFlightSqlClient(t.context.options);
+  const buffer = await client.getTables({});
+  const table = tableFromIPC(buffer);
+  t.truthy(table.toString());
+});
+
+test('get tables with schema returns data', async (t) => {
+  const client = await createFlightSqlClient(t.context.options);
+  const buffer = await client.getTables({ includeSchema: true });
+  const table = tableFromIPC(buffer);
+  t.truthy(table.toString());
+});

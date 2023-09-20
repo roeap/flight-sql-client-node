@@ -25,31 +25,24 @@ pub struct ClientArgs {
     /// Additional headers.
     ///
     /// Values should be key value pairs separated by ':'
-    // #[clap(long, value_delimiter = ',')]
     pub headers: Vec<KeyValue>,
 
     /// Username
-    // #[clap(long)]
     pub username: Option<String>,
 
     /// Password
-    // #[clap(long)]
     pub password: Option<String>,
 
     /// Auth token.
-    // #[clap(long)]
     pub token: Option<String>,
 
     /// Use TLS.
-    // #[clap(long)]
     pub tls: bool,
 
     /// Server host.
-    // #[clap(long)]
     pub host: String,
 
     /// Server port.
-    // #[clap(long)]
     pub port: Option<u16>,
 }
 
