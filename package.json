@@ -54,12 +54,14 @@
     "version": "napi version"
   },
   "devDependencies": {
+    "@ava/typescript": "^4.1.0",
     "@napi-rs/cli": "^2.14.6",
     "@swc-node/register": "^1.5.5",
     "@swc/core": "^1.3.32",
     "@taplo/cli": "^0.5.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "apache-arrow": "^13.0.0",
     "ava": "^5.1.1",
     "benny": "^3.7.1",
     "chalk": "^5.2.0",
@@ -88,18 +90,21 @@
     "require": [
       "@swc-node/register"
     ],
-    "extensions": [
-      "ts"
-    ],
     "timeout": "2m",
     "workerThreads": false,
     "environmentVariables": {
       "TS_NODE_PROJECT": "./tsconfig.json"
+    },
+    "typescript": {
+      "rewritePaths": {
+        "src/": "build/"
+      },
+      "compile": false
     }
   },
   "prettier": {
     "printWidth": 120,
-    "semi": false,
+    "semi": true,
     "trailingComma": "all",
     "singleQuote": true,
     "arrowParens": "always"
