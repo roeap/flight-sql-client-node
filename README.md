@@ -5,6 +5,9 @@
 
 A client library for interacting with [Arrow Flight SQL] enabled databases from Node.js.
 
+This library provides a thin wrapper aroung the flight-sql client implementatiuon from
+the [arrow-flight] crate. Node bindings are created with the help of [napi-rs].
+
 ## Usage
 
 Install library
@@ -76,10 +79,10 @@ yarn test
 
 Releases are automated via github actions.
 
-To create a release, first increment the version.
+To create a release, first increment the version. (note the use fo npm)
 
 ```sh
-yarn version <patch | minor | major | ...>
+npm version <patch | minor | major | ...>
 ```
 
 this will bump all version fields, and create a new commit with the version number.
@@ -91,3 +94,5 @@ git push --follow-tags
 ```
 
 [Arrow Flight SQL]: https://arrow.apache.org/docs/format/FlightSql.html
+[arrow-flight]: https://crates.io/crates/arrow-flight
+[napi-rs]: https://napi.rs/
