@@ -1,5 +1,15 @@
-const { plus100 } = require('./index')
+import { ArrowFlightClient } from './index';
 
-console.assert(plus100(0) === 100, 'Simple test failed')
+const options = {
+  username: 'flight_username',
+  password: 'testing123',
+  tls: false,
+  host: '127.0.0.1',
+  port: 50051,
+  headers: [],
+};
 
-console.info('Simple test passed')
+const client = await ArrowFlightClient.fromOptions(options);
+const tables = await client.getTables({ includeSchema: true });
+
+console.info(tables.toArry());

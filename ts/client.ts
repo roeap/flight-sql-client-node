@@ -1,6 +1,12 @@
 import { Table, tableFromIPC, Utf8, Binary, TypeMap } from 'apache-arrow';
 
-import { FlightSqlClient, GetTablesOptions, GetDbSchemasOptions } from '../native';
+import {
+  FlightSqlClient,
+  GetTablesOptions,
+  GetDbSchemasOptions,
+  ClientOptions,
+  createFlightSqlClient,
+} from '../native';
 
 type catalogsSchema = {
   catalog_name: Utf8;
@@ -20,6 +26,11 @@ type tablesSchema = {
 };
 
 export class ArrowFlightClient {
+  static async fromOptions(options: ClientOptions): Promise<ArrowFlightClient> {
+    const client = await createFlightSqlClient(options);
+    return new ArrowFlightClient(client);
+  }
+
   constructor(private readonly client: FlightSqlClient) {}
 
   async query<T extends TypeMap = any>(query: string): Promise<Table<T>> {

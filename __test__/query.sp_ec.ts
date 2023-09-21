@@ -1,12 +1,11 @@
-import { tableFromIPC } from 'apache-arrow';
 import anyTest, { TestFn } from 'ava';
 
-import { ClientArgs, createFlightSqlClient } from '../index';
+import { ClientOptions, ArrowFlightClient } from '../index';
 
-const test = anyTest as TestFn<{ options: ClientArgs }>;
+const test = anyTest as TestFn<{ options: ClientOptions; client: ArrowFlightClient }>;
 
-test.beforeEach((t) => {
-  const options: ClientArgs = {
+test.beforeEach(async (t) => {
+  const options: ClientOptions = {
     username: 'flight_username',
     password: 'testing123',
     tls: false,
@@ -14,45 +13,32 @@ test.beforeEach((t) => {
     port: 50051,
     headers: [],
   };
-  t.context = { options };
-});
-
-test('create a client', async (t) => {
-  const client = await createFlightSqlClient(t.context.options);
-  t.truthy(client);
+  const client = await ArrowFlightClient.fromOptions(options);
+  t.context = { options, client };
 });
 
 test('simple query returns data', async (t) => {
-  const client = await createFlightSqlClient(t.context.options);
-  const buffer = await client.query('SELECT * FROM delta.test.simple_table');
-  const table = tableFromIPC(buffer);
+  const table = await t.context.client.query('SELECT * FROM delta.test.simple_table');
   t.truthy(table.toString());
 });
 
-// test('get catalogs returns data', async (t) => {
-//   const client = await createFlightSqlClient(t.context.options);
-//   const buffer = await client.getCatalogs();
-//   const table = tableFromIPC(buffer);
-//   t.truthy(table.toString());
-// });
+test('get catalogs returns data', async (t) => {
+  const table = await t.context.client.getCatalogs();
+  t.truthy(table.toString().includes('catalog_name'));
+});
 
 test('get schemas returns data', async (t) => {
-  const client = await createFlightSqlClient(t.context.options);
-  const buffer = await client.getDbSchemas({});
-  const table = tableFromIPC(buffer);
-  t.truthy(table.toString());
+  const table = await t.context.client.getDbSchemas({});
+  t.truthy(table.toString().includes('db_schema_name'));
 });
 
 test('get tables returns data', async (t) => {
-  const client = await createFlightSqlClient(t.context.options);
-  const buffer = await client.getTables({});
-  const table = tableFromIPC(buffer);
-  t.truthy(table.toString());
+  const table = await t.context.client.getTables({});
+  t.assert(table.toString().includes('table_name'));
+  t.assert(!table.toString().includes('table_schema'));
 });
 
 test('get tables with schema returns data', async (t) => {
-  const client = await createFlightSqlClient(t.context.options);
-  const buffer = await client.getTables({ includeSchema: true });
-  const table = tableFromIPC(buffer);
-  t.truthy(table.toString());
+  const table = await t.context.client.getTables({ includeSchema: true });
+  t.assert(table.toString().includes('table_schema'));
 });

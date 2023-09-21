@@ -13,7 +13,7 @@ use tonic::transport::Channel;
 
 use crate::conversion::record_batch_to_buffer;
 use crate::error::{ArrowSnafu, Result};
-use crate::flight_client::{execute_flight, setup_client, ClientArgs};
+use crate::flight_client::{execute_flight, setup_client, ClientOptions};
 
 #[napi]
 pub struct FlightSqlClient {
@@ -78,7 +78,9 @@ impl FlightSqlClient {
 }
 
 #[napi]
-pub async fn create_flight_sql_client(options: ClientArgs) -> Result<FlightSqlClient, napi::Error> {
+pub async fn create_flight_sql_client(
+    options: ClientOptions,
+) -> Result<FlightSqlClient, napi::Error> {
     Ok(FlightSqlClient {
         client: Mutex::new(setup_client(options).await.context(ArrowSnafu {
             message: "failed setting up flight sql client",

@@ -64,7 +64,7 @@ rules:
 
 overrides:
   - files:
-      - ./**/*{.ts,.tsx}
+      - ./**/*{.ts,.tsx,.js}
     rules:
       'no-unused-vars': [2, { varsIgnorePattern: '^_', argsIgnorePattern: '^_', ignoreRestSiblings: true }]
       'no-undef': 0
@@ -76,7 +76,7 @@ overrides:
       'no-duplicate-imports': 0
       # TypeScript Interface and Type
       'no-use-before-define': 0
-      'semi': [2, "always"]
+      'semi': [2, 'always']
       '@typescript-eslint/adjacent-overload-signatures': 2
       '@typescript-eslint/await-thenable': 2
       '@typescript-eslint/consistent-type-assertions': 2
@@ -167,13 +167,8 @@ overrides:
               ],
           },
         ]
-      "prettier/prettier": [
-        "error",
-        {
-          "printWidth": 120,
-          "semi": true,
-          "trailingComma": "all",
-          "singleQuote": true,
-          "arrowParens": "always"
-        }
-      ]
+      'prettier/prettier':
+        [
+          'error',
+          { 'printWidth': 120, 'semi': true, 'trailingComma': 'all', 'singleQuote': true, 'arrowParens': 'always' },
+        ]

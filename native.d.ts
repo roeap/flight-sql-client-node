@@ -8,7 +8,7 @@ export interface KeyValue {
   key: string;
   value: string;
 }
-export interface ClientArgs {
+export interface ClientOptions {
   /**
    * Additional headers.
    *
@@ -28,7 +28,7 @@ export interface ClientArgs {
   /** Server port. */
   port?: number;
 }
-export function createFlightSqlClient(options: ClientArgs): Promise<FlightSqlClient>;
+export function createFlightSqlClient(options: ClientOptions): Promise<FlightSqlClient>;
 export function rustCrateVersion(): string;
 export interface GetDbSchemasOptions {
   /**

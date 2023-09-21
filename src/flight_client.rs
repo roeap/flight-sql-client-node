@@ -24,7 +24,7 @@ pub struct KeyValue {
 
 #[derive(Debug)]
 #[napi(object)]
-pub struct ClientArgs {
+pub struct ClientOptions {
     /// Additional headers.
     ///
     /// Values should be key value pairs separated by ':'
@@ -114,7 +114,7 @@ fn setup_logging() {
 }
 
 pub(crate) async fn setup_client(
-    args: ClientArgs,
+    args: ClientOptions,
 ) -> Result<FlightSqlServiceClient<Channel>, ArrowError> {
     let port = args.port.unwrap_or(if args.tls { 443 } else { 80 });
 
