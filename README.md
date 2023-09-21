@@ -5,7 +5,7 @@
 
 A client library for interacting with [Arrow Flight SQL] enabled databases from Node.js.
 
-This library provides a thin wrapper aroung the flight-sql client implementatiuon from
+This library provides a thin wrapper around the flight-sql client implementation in
 the [arrow-flight] crate. Node bindings are created with the help of [napi-rs].
 
 ## Usage
@@ -23,7 +23,8 @@ pnpm add @lakehouse-rs/flight-sql-client
 Create a new client instance
 
 ```ts
-import { ClientOptions, ArrowFlightClient } from '@lakehouse-rs/flight-sql-client';
+import { ClientOptions, createFlightSqlClient } from '@lakehouse-rs/flight-sql-client';
+import { tableFromIPC } from 'apache-arrow';
 
 const options: ClientOptions = {
   username: 'flight_username',
@@ -34,19 +35,21 @@ const options: ClientOptions = {
   headers: [],
 };
 
-const client = await ArrowFlightClient.fromOptions(options);
+const client = await createFlightSqlClient(options);
 ```
 
 Execute a query against the service
 
 ```ts
-const table = await client.query('SELECT * FROM my_tyble');
+const buffer = await client.query('SELECT * FROM my_tyble');
+const table = tableFromIPC(buffer);
 ```
 
 Or inspect some server metadata
 
 ```ts
-const tablesTable = await client.getTables({ includeSchema: true });
+const buffer = await client.getTables({ includeSchema: true });
+const table = tableFromIPC(buffer);
 ```
 
 ## Development
@@ -79,7 +82,7 @@ yarn test
 
 Releases are automated via github actions.
 
-To create a release, first increment the version. (note the use fo npm)
+To create a release, first increment the version. (note the use of npm)
 
 ```sh
 npm version <patch | minor | major | ...>
