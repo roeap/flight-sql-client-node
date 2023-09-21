@@ -15,7 +15,7 @@
     "ts",
     "index.ts",
     "native.d.ts",
-    "narive.js"
+    "native.js"
   ],
   "napi": {
     "name": "flight-sql-client",
