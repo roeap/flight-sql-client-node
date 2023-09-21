@@ -31,11 +31,7 @@ impl FlightSqlClient {
         let flight_info = prepared_stmt.execute().await.context(ArrowSnafu {
             message: "failed to execute prepared statement",
         })?;
-        let batches = execute_flight(&mut client, flight_info)
-            .await
-            .context(ArrowSnafu {
-                message: "failed to read flight data",
-            })?;
+        let batches = execute_flight(&mut client, flight_info).await?;
         Ok(record_batch_to_buffer(batches)?.into())
     }
 
@@ -45,11 +41,7 @@ impl FlightSqlClient {
         let flight_info = client.get_catalogs().await.context(ArrowSnafu {
             message: "failed to execute prepared statement",
         })?;
-        let batches = execute_flight(&mut client, flight_info)
-            .await
-            .context(ArrowSnafu {
-                message: "failed to read flight data",
-            })?;
+        let batches = execute_flight(&mut client, flight_info).await?;
         Ok(record_batch_to_buffer(batches)?.into())
     }
 
@@ -63,11 +55,7 @@ impl FlightSqlClient {
         let flight_info = client.get_db_schemas(command).await.context(ArrowSnafu {
             message: "failed to execute prepared statement",
         })?;
-        let batches = execute_flight(&mut client, flight_info)
-            .await
-            .context(ArrowSnafu {
-                message: "failed to read flight data",
-            })?;
+        let batches = execute_flight(&mut client, flight_info).await?;
         Ok(record_batch_to_buffer(batches)?.into())
     }
 
@@ -84,11 +72,7 @@ impl FlightSqlClient {
         let flight_info = client.get_tables(command).await.context(ArrowSnafu {
             message: "failed to execute prepared statement",
         })?;
-        let batches = execute_flight(&mut client, flight_info)
-            .await
-            .context(ArrowSnafu {
-                message: "failed to read flight data",
-            })?;
+        let batches = execute_flight(&mut client, flight_info).await?;
         Ok(record_batch_to_buffer(batches)?.into())
     }
 }

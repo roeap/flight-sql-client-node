@@ -8,8 +8,11 @@ use arrow_flight::{
 use arrow_schema::{ArrowError, Schema};
 use futures::TryStreamExt;
 use napi_derive::napi;
+use snafu::ResultExt;
 use tonic::transport::{Channel, ClientTlsConfig, Endpoint};
-use tracing_log::log::info;
+use tracing_log::log::{debug, info};
+
+use crate::error::{ArrowSnafu, Result, StatusSnafu};
 
 /// A ':' separated key value pair
 #[derive(Debug, Clone)]
@@ -49,26 +52,36 @@ pub struct ClientArgs {
 pub(crate) async fn execute_flight(
     client: &mut FlightSqlServiceClient<Channel>,
     info: FlightInfo,
-) -> Result<Vec<RecordBatch>, ArrowError> {
-    let schema = Arc::new(Schema::try_from(info.clone()).expect("valid schema"));
+) -> Result<Vec<RecordBatch>> {
+    let schema = Arc::new(Schema::try_from(info.clone()).context(ArrowSnafu {
+        message: "creating schema from flight info",
+    })?);
     let mut batches = Vec::with_capacity(info.endpoint.len() + 1);
     batches.push(RecordBatch::new_empty(schema));
-    info!("decoded schema");
+
+    debug!("decoded schema");
 
     for endpoint in info.endpoint {
         let Some(ticket) = &endpoint.ticket else {
             panic!("did not get ticket");
         };
-        let flight_data = client.do_get(ticket.clone()).await.expect("do get");
+        let flight_data = client.do_get(ticket.clone()).await.context(ArrowSnafu {
+            message: "do_get_request",
+        })?;
         let flight_data: Vec<FlightData> = flight_data
             .try_collect()
             .await
+            .context(StatusSnafu {
+                message: "collect data stream",
+            })
             .expect("collect data stream");
-        let mut endpoint_batches =
-            flight_data_to_batches(&flight_data).expect("convert flight data to record batches");
+        let mut endpoint_batches = flight_data_to_batches(&flight_data).context(ArrowSnafu {
+            message: "convert flight data to record batches",
+        })?;
         batches.append(&mut endpoint_batches);
     }
-    info!("received data");
+
+    debug!("received data");
 
     Ok(batches)
 }
