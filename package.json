@@ -2,7 +2,7 @@
   "name": "@lakehouse-rs/flight-sql-client",
   "version": "0.0.7",
   "description": "A FlightSQL client for  Node.js",
-  "main": "index.ts",
+  "main": "index.js",
   "repository": "https://github.com/roeap/flight-sql-client-node.git",
   "license": "MIT",
   "keywords": [

@@ -1,12 +1,6 @@
 import { Table, tableFromIPC, Utf8, Binary, TypeMap } from 'apache-arrow';
 
-import {
-  FlightSqlClient,
-  GetTablesOptions,
-  GetDbSchemasOptions,
-  ClientOptions,
-  createFlightSqlClient,
-} from '../native';
+import { FlightSqlClient, GetTablesOptions, GetDbSchemasOptions, ClientOptions, createFlightSqlClient } from '../index';
 
 type catalogsSchema = {
   catalog_name: Utf8;
