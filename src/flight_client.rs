@@ -73,10 +73,6 @@ pub(crate) async fn execute_flight(
                 message: "collect data stream",
             })
             .expect("collect data stream");
-        // let mut endpoint_batches =
-        //     flight_data_to_batches(flight_data.as_slice()).context(ArrowSnafu {
-        //         message: "convert flight data to record batches",
-        //     })?;
         batches.append(&mut flight_data);
     }
 
