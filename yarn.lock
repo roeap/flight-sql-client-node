@@ -168,7 +168,7 @@ __metadata:
     "@taplo/cli": ^0.5.2
     "@typescript-eslint/eslint-plugin": ^6.0.0
     "@typescript-eslint/parser": ^6.0.0
-    apache-arrow: ^13.0.0
+    apache-arrow: ^14.0.1
     ava: ^5.1.1
     benny: ^3.7.1
     chalk: ^5.2.0
@@ -745,9 +745,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apache-arrow@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "apache-arrow@npm:13.0.0"
+"apache-arrow@npm:^14.0.1":
+  version: 14.0.1
+  resolution: "apache-arrow@npm:14.0.1"
   dependencies:
     "@types/command-line-args": 5.2.0
     "@types/command-line-usage": 5.0.2
@@ -761,7 +761,7 @@ __metadata:
     tslib: ^2.5.3
   bin:
     arrow2csv: bin/arrow2csv.js
-  checksum: 34aeb3e179e5d068490ad9d4ab1e0113f1c1ed684415c1069c72b59a0b99db746bdd26040c817bfc305e9dd644751255410d7adb5688bdb3625dcf68dc714103
+  checksum: bb4e1eb66478ccafd7e069ccd7042abbff15bc890ffe434f93f78a2c18ccdb51a599101778287c1235f3c9a93d10482f266d739ea2afcffc2f0e320767da9041
   languageName: node
   linkType: hard
 

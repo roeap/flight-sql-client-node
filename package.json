@@ -57,7 +57,7 @@
     "postpack": "pinst --enable"
   },
   "dependencies": {
-    "apache-arrow": "^13.0.0"
+    "apache-arrow": "^14.0.1"
   },
   "devDependencies": {
     "@ava/typescript": "^4.1.0",
