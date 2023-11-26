@@ -2,9 +2,7 @@ use std::{sync::Arc, time::Duration};
 
 use arrow_array::{ArrayRef, Datum, RecordBatch, StringArray};
 use arrow_cast::{cast_with_options, CastOptions};
-use arrow_flight::{
-    sql::client::FlightSqlServiceClient, utils::flight_data_to_batches, FlightData, FlightInfo,
-};
+use arrow_flight::{sql::client::FlightSqlServiceClient, FlightInfo};
 use arrow_schema::{ArrowError, Schema};
 use futures::TryStreamExt;
 use napi_derive::napi;
@@ -12,7 +10,7 @@ use snafu::ResultExt;
 use tonic::transport::{Channel, ClientTlsConfig, Endpoint};
 use tracing_log::log::{debug, info};
 
-use crate::error::{ArrowSnafu, Result, StatusSnafu};
+use crate::error::{ArrowSnafu, FlightSnafu, Result};
 
 /// A ':' separated key value pair
 #[derive(Debug, Clone)]
@@ -68,17 +66,18 @@ pub(crate) async fn execute_flight(
         let flight_data = client.do_get(ticket.clone()).await.context(ArrowSnafu {
             message: "do_get_request",
         })?;
-        let flight_data: Vec<FlightData> = flight_data
+        let mut flight_data: Vec<_> = flight_data
             .try_collect()
             .await
-            .context(StatusSnafu {
+            .context(FlightSnafu {
                 message: "collect data stream",
             })
             .expect("collect data stream");
-        let mut endpoint_batches = flight_data_to_batches(&flight_data).context(ArrowSnafu {
-            message: "convert flight data to record batches",
-        })?;
-        batches.append(&mut endpoint_batches);
+        // let mut endpoint_batches =
+        //     flight_data_to_batches(flight_data.as_slice()).context(ArrowSnafu {
+        //         message: "convert flight data to record batches",
+        //     })?;
+        batches.append(&mut flight_data);
     }
 
     debug!("received data");
@@ -121,7 +120,7 @@ pub(crate) async fn setup_client(
     let protocol = if args.tls { "https" } else { "http" };
 
     let mut endpoint = Endpoint::new(format!("{}://{}:{}", protocol, args.host, port))
-        .map_err(|_| ArrowError::IoError("Cannot create endpoint".to_string()))?
+        .map_err(|err| ArrowError::ExternalError(Box::new(err)))?
         .connect_timeout(Duration::from_secs(20))
         .timeout(Duration::from_secs(20))
         .tcp_nodelay(true) // Disable Nagle's Algorithm since we don't want packets to wait
@@ -134,13 +133,13 @@ pub(crate) async fn setup_client(
         let tls_config = ClientTlsConfig::new();
         endpoint = endpoint
             .tls_config(tls_config)
-            .map_err(|_| ArrowError::IoError("Cannot create TLS endpoint".to_string()))?;
+            .map_err(|err| ArrowError::ExternalError(Box::new(err)))?;
     }
 
     let channel = endpoint
         .connect()
         .await
-        .map_err(|e| ArrowError::IoError(format!("Cannot connect to endpoint: {e}")))?;
+        .map_err(|err| ArrowError::ExternalError(Box::new(err)))?;
 
     let mut client = FlightSqlServiceClient::new(channel);
     info!("connected");

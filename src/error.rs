@@ -1,3 +1,4 @@
+use arrow_flight::error::FlightError;
 use arrow_schema::ArrowError;
 use snafu::Snafu;
 use tonic::Status;
@@ -12,6 +13,10 @@ pub enum Error {
     #[snafu(display("{message}"))]
     Arrow {
         source: ArrowError,
+        message: &'static str,
+    },
+    Flight {
+        source: FlightError,
         message: &'static str,
     },
     Status {
